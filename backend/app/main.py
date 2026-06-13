@@ -230,10 +230,13 @@ def create_app() -> FastAPI:
     )
 
     # CORS: allow configured frontend origins.
+    # `allow_origin_regex` is a safety net that accepts the deployed Render
+    # frontend (any URL suffix) without needing its exact URL configured.
     # Validates: Requirements 14.7
     app.add_middleware(
         CORSMiddleware,
         allow_origins=settings.cors_origins_list,
+        allow_origin_regex=settings.cors_origin_regex,
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],

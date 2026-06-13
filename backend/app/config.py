@@ -106,6 +106,15 @@ class Settings(BaseSettings):
         description="Comma-separated list of allowed CORS origins",
     )
 
+    cors_origin_regex: Optional[str] = Field(
+        default=r"^https://tokensaver-web[\w.-]*\.onrender\.com$",
+        description=(
+            "Regex matching additional allowed origins. Defaults to the "
+            "TokenSaver frontend on Render (any URL suffix), so the deployed "
+            "frontend is accepted without hardcoding its exact URL."
+        ),
+    )
+
     # Azure AI service settings (optional)
     azure_di_endpoint: Optional[str] = Field(
         default=None,
