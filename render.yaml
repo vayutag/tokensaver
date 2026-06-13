@@ -1,0 +1,88 @@
+# Render Blueprint — deploys BOTH the TokenSaver backend (Docker web service)
+# and frontend (static site) on Render's free tier.
+#
+# How to use:
+#   1. Push this repo to GitHub/GitLab.
+#   2. In Render: New → Blueprint → connect the repo → Apply.
+#   3. After the first deploy, set VITE_API_BASE_URL on the static site to the
+#      backend URL and redeploy it; set CORS_ORIGINS on the backend to the
+#      static site URL and redeploy it.
+#
+# Free-tier notes:
+#   - The web service (backend) sleeps after ~15 min idle and has 512 MB RAM.
+#     Large in-memory uploads (multi-GB) can exceed that; MAX_FILE_SIZE is set
+#     to 50 MB below so the free instance does not crash. Raise it on a paid
+#     instance or VPS.
+#   - The static site is free, CDN-backed, and does not sleep.
+
+services:
+  # ----------------------------------------------------------------------- #
+  # Backend — FastAPI via the existing Docker image in ./backend             #
+  # ----------------------------------------------------------------------- #
+  - type: web
+    name: tokensaver-api
+    runtime: docker
+    plan: free
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      # After the first deploy, set this to the tokensaver-web URL, e.g.
+      # https://tokensaver-web.onrender.com  (no trailing slash).
+      - key: CORS_ORIGINS
+        sync: false
+      # 50 MB cap — safe for the 512 MB free instance. Raise to 5368709120
+      # (5 GB) only on a paid instance / VPS with enough memory.
+      - key: MAX_FILE_SIZE
+        value: "52428800"
+      - key: CONVERSION_TIMEOUT
+        value: "30"
+      - key: REQUEST_TIMEOUT
+        value: "120"
+      - key: MAX_CONCURRENT_CONVERSIONS
+        value: "5"
+      - key: RESULT_RETENTION_HOURS
+        value: "1"
+      - key: RATE_LIMIT_PER_HOUR
+        value: "100"
+      - key: LOG_LEVEL
+        value: "INFO"
+      - key: LOG_FORMAT
+        value: "json"
+
+  # ----------------------------------------------------------------------- #
+  # Frontend — static Vite build from ./frontend                             #
+  # ----------------------------------------------------------------------- #
+  - type: web
+    name: tokensaver-web
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    autoDeploy: true
+    envVars:
+      # After the backend's first deploy, set this to the tokensaver-api URL,
+      # e.g. https://tokensaver-api.onrender.com (no trailing slash), then
+      # redeploy this static site so it is baked into the build.
+      - key: VITE_API_BASE_URL
+        sync: false
+      - key: VITE_MAX_FILE_SIZE
+        value: "52428800"
+      - key: VITE_APP_NAME
+        value: "TokenSaver"
+      - key: VITE_APP_ENV
+        value: "production"
+    # SPA routing: serve index.html for client-side routes so deep links like
+    # /convert and /docs do not 404 on refresh.
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
