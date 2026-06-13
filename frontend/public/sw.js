@@ -14,7 +14,7 @@
  * previous versions on activation.
  */
 
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v2';
 const CACHE_NAME = `markitdown-static-${CACHE_VERSION}`;
 
 // Activate the new worker immediately rather than waiting for existing tabs
