@@ -1,0 +1,41 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main {
+  flex: 1;
+  width: 100%;
+  outline: none;
+}
+
+.skipLink {
+  position: absolute;
+  left: 0.75rem;
+  top: -3.5rem;
+  z-index: 100;
+  padding: 0.65rem 1rem;
+  border-radius: var(--radius-sm);
+  background: var(--gradient-accent);
+  color: var(--text-on-accent);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  box-shadow: var(--shadow-accent);
+  transition: top var(--transition);
+}
+
+.skipLink:hover {
+  color: var(--text-on-accent);
+}
+
+.skipLink:focus {
+  top: 0.75rem;
+}
+
+.skipLink:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}

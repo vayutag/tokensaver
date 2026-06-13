@@ -1,0 +1,286 @@
+.page {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------------------------------------------------------------- Hero --- */
+.hero {
+  position: relative;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 5.5rem 1.5rem 3.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.15rem;
+}
+
+.eyebrow {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background-color: var(--surface);
+  box-shadow: var(--shadow-xs);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-active);
+}
+
+.heroTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 6vw, 3.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: var(--text);
+}
+
+.heroHighlight {
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.heroSubtitle {
+  margin: 0;
+  max-width: 40rem;
+  font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.heroActions {
+  display: flex;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 0.65rem;
+}
+
+/* --------------------------------------------------------------- Buttons - */
+.primaryCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.8rem 1.75rem;
+  border-radius: var(--radius-pill);
+  background: var(--gradient-accent);
+  color: var(--text-on-accent);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  box-shadow: var(--shadow-accent);
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition),
+    filter var(--transition);
+}
+
+.primaryCta:hover {
+  color: var(--text-on-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(217, 119, 87, 0.42);
+  filter: saturate(1.05);
+}
+
+.primaryCta:active {
+  transform: translateY(0);
+}
+
+.primaryCta:focus-visible,
+.secondaryCta:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.secondaryCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.8rem 1.75rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-strong);
+  background-color: var(--surface);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  box-shadow: var(--shadow-xs);
+  transition:
+    background-color var(--transition),
+    border-color var(--transition),
+    transform var(--transition);
+}
+
+.secondaryCta:hover {
+  color: var(--text);
+  background-color: var(--bg-soft);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.secondaryCta:active {
+  transform: translateY(0);
+}
+
+/* -------------------------------------------------------------- Features - */
+.features {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3.5rem;
+  width: 100%;
+}
+
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.featureCard {
+  padding: 1.75rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background-color: var(--surface);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition),
+    border-color var(--transition);
+}
+
+.featureCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--border-strong);
+}
+
+.featureIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 0.35rem;
+  border-radius: var(--radius);
+  background-color: var(--accent-soft);
+  color: var(--accent-active);
+  font-size: 1.5rem;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+.featureTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--text);
+}
+
+.featureText {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* --------------------------------------------------------------- Formats - */
+.formats {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 1rem 1.5rem 3.5rem;
+  width: 100%;
+  text-align: center;
+}
+
+.formatsTitle {
+  margin: 0 0 1.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3vw, 1.75rem);
+  color: var(--text);
+}
+
+.formatList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: center;
+}
+
+.formatChip {
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background-color: var(--surface);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  box-shadow: var(--shadow-xs);
+  transition:
+    color var(--transition),
+    border-color var(--transition),
+    background-color var(--transition);
+}
+
+.formatChip:hover {
+  color: var(--accent-active);
+  border-color: var(--accent);
+  background-color: var(--accent-soft);
+}
+
+/* ----------------------------------------------------------- Closing CTA - */
+.closing {
+  max-width: var(--content-max);
+  margin: 0 auto 4rem;
+  padding: 3.5rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  border-radius: var(--radius-xl);
+  background: var(--gradient-dark);
+  box-shadow: var(--shadow-lg);
+}
+
+.closingTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4vw, 2.25rem);
+  color: var(--cream);
+}
+
+.closingText {
+  margin: 0;
+  color: rgba(245, 243, 236, 0.7);
+  font-size: 1.05rem;
+}
+
+.closing .primaryCta {
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 720px) {
+  .closing {
+    margin: 0 1.25rem 3rem;
+    padding: 2.5rem 1.5rem;
+  }
+}

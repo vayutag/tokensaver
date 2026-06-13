@@ -1,0 +1,43 @@
+# Python bytecode / caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Environment variables (never bake secrets into the image)
+.env
+.env.*
+!.env.example
+
+# Temporary storage (mounted as a volume at runtime)
+temp/
+*.tmp
+
+# Test / coverage artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+.hypothesis/
+tests/
+
+# Local verification scripts (not needed in the image)
+_verify_*.py
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+
+# Docker / VCS / docs
+Dockerfile
+.dockerignore
+docker-compose.yml
+.git/
+.gitignore
+README.md

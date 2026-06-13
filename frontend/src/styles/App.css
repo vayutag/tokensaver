@@ -1,0 +1,35 @@
+/* ===========================================================================
+   App.css
+   App.tsx no longer imports this file; the application shell is styled via
+   CSS Modules (Layout, NavHeader, Footer) and the global design system in
+   index.css. Kept as a valid, minimal stylesheet for any legacy references.
+   ======================================================================== */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+.app__header {
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.app__header h1 {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.app__main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}

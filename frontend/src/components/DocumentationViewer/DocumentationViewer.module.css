@@ -1,0 +1,342 @@
+/**
+ * Styles for the DocumentationViewer component.
+ *
+ * Three-column layout: navigation sidebar, content pane, and a table of
+ * contents. Collapses to a single column on narrow viewports.
+ *
+ * Task 11.1 - Create DocumentationViewer component.
+ *
+ * Restyled to the MarkItDown design system (see styles/index.css): a sidebar
+ * with a terracotta active item, a search input with a custom focus ring, a
+ * subtle table of contents, and a readable content surface.
+ */
+
+.container {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr) 220px;
+  gap: 1.75rem;
+  align-items: start;
+  width: 100%;
+}
+
+.sidebar {
+  position: sticky;
+  top: 1.25rem;
+  align-self: start;
+  max-height: calc(100vh - 2.5rem);
+  overflow-y: auto;
+  padding: 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background-color: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.search {
+  position: relative;
+  margin-bottom: 0.75rem;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.55rem 2rem 0.55rem 0.75rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--text);
+  background-color: var(--surface-2);
+  box-sizing: border-box;
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition),
+    background-color var(--transition);
+}
+
+.searchInput::placeholder {
+  color: var(--text-subtle);
+}
+
+.searchInput:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  background-color: var(--surface);
+  box-shadow: 0 0 0 4px var(--ring);
+}
+
+.searchClear {
+  position: absolute;
+  top: 50%;
+  right: 0.45rem;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.2rem;
+  height: 1.2rem;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--cream-300);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color var(--transition),
+    color var(--transition);
+}
+
+.searchClear:hover {
+  background: var(--border-strong);
+  color: var(--text);
+}
+
+.searchClear:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+/* Widen the overlay clear button's hit area on touch devices. It stays
+   vertically centered within the (taller) search input. Requirement 17.2. */
+@media (pointer: coarse) {
+  .searchClear {
+    width: 1.85rem;
+    height: 1.85rem;
+  }
+}
+
+.searchResults {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.searchCount {
+  margin: 0 0 0.35rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-subtle);
+}
+
+.searchEmpty {
+  margin: 0;
+  padding: 0.5rem 0.25rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.resultList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.resultLink {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  width: 100%;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background-color var(--transition),
+    border-color var(--transition);
+}
+
+.resultLink:hover {
+  background-color: var(--bg-soft);
+}
+
+.resultLink:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+.resultLinkActive {
+  background-color: var(--accent-soft);
+  border-color: var(--terracotta-300);
+}
+
+.resultTitle {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.resultSnippet {
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+
+.highlight {
+  background-color: var(--accent-soft);
+  color: var(--accent-active);
+  border-radius: 0.125rem;
+  padding: 0 0.1em;
+}
+
+.sectionList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.sectionLink {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.85rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  text-align: left;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition:
+    background-color var(--transition),
+    color var(--transition);
+}
+
+.sectionLink:hover {
+  background-color: var(--bg-soft);
+  color: var(--text);
+}
+
+.sectionLink:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+.sectionLinkActive {
+  background: var(--gradient-accent);
+  color: var(--text-on-accent);
+  font-weight: 600;
+  box-shadow: var(--shadow-accent);
+}
+
+.sectionLinkActive:hover {
+  color: var(--text-on-accent);
+}
+
+.content {
+  min-width: 0;
+}
+
+.article {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background-color: var(--surface);
+  box-shadow: var(--shadow-md);
+  padding: 2rem 2.25rem;
+}
+
+.markdown {
+  min-width: 0;
+}
+
+.empty {
+  margin: 0;
+  padding: 2rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.toc {
+  position: sticky;
+  top: 1.25rem;
+  align-self: start;
+  max-height: calc(100vh - 2.5rem);
+  overflow-y: auto;
+  padding: 0.85rem 0.75rem;
+  border-left: 2px solid var(--border);
+}
+
+.tocTitle {
+  margin: 0 0 0.6rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-subtle);
+}
+
+.tocList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.tocItem {
+  min-width: 0;
+}
+
+.tocLink {
+  display: block;
+  width: 100%;
+  padding: 0.25rem 0.35rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  text-align: left;
+  font-size: 0.825rem;
+  line-height: 1.35;
+  color: var(--text-muted);
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color var(--transition);
+}
+
+.tocLink:hover {
+  color: var(--accent);
+}
+
+.tocLink:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+/* Tablet: drop the table of contents, keep sidebar + content. */
+@media (max-width: 1024px) {
+  .container {
+    grid-template-columns: 220px minmax(0, 1fr);
+  }
+
+  .toc {
+    display: none;
+  }
+}
+
+/* Mobile: stack the sidebar above the content. */
+@media (max-width: 640px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+    max-height: none;
+  }
+
+  .article {
+    padding: 1.5rem 1.25rem;
+  }
+}

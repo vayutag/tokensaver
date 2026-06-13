@@ -1,0 +1,46 @@
+# Netlify deployment configuration for the MarkItDown frontend (Vite SPA).
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Proxy/redirect API calls to the backend so the SPA can use same-origin
+# requests to /api/* without CORS. Update `to` for your backend origin or
+# override via the BACKEND_API_ORIGIN build environment variable.
+[[redirects]]
+  from = "/api/*"
+  to = "https://api.markitdown.example.com/api/:splat"
+  status = 200
+  force = true
+
+# SPA fallback: serve index.html for all non-API client routes.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Security headers applied to every response (Requirement 13.1).
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://api.markitdown.example.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests"
+
+# Long-lived immutable caching for content-hashed static assets (CDN).
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Always revalidate the HTML entry point so new deploys are picked up.
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"

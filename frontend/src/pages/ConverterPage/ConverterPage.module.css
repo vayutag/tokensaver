@@ -1,0 +1,191 @@
+/**
+ * Styles for the ConverterPage.
+ *
+ * Restyled to the MarkItDown design system (see styles/index.css): generous
+ * spacing on a cream canvas, display-font section headings, a friendly
+ * empty state, and token-driven secondary buttons.
+ */
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 3rem 1.25rem 4.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 4vw, 2.75rem);
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.subtitle {
+  margin: 0 auto;
+  max-width: 42rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+}
+
+.listSection,
+.resultsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.listHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.listActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Secondary buttons — surface with a border, warming to soft bg on hover. */
+.secondaryButton {
+  padding: 0.5rem 0.95rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color var(--transition),
+    border-color var(--transition);
+}
+
+.secondaryButton:hover:not(:disabled) {
+  background-color: var(--bg-soft);
+  border-color: var(--accent);
+}
+
+.secondaryButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.secondaryButton:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--ring);
+}
+
+.resultsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Empty state shown before any files are selected: a friendly nudge plus a
+   reminder of which formats are accepted. */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.6rem;
+  padding: 2.25rem 1.5rem;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-lg);
+  background-color: var(--surface);
+  box-shadow: var(--shadow-xs);
+  /* Gentle fade-in; neutralized under prefers-reduced-motion by the global
+     rule in styles/index.css. */
+  animation: empty-state-in 0.35s ease both;
+}
+
+@keyframes empty-state-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.emptyIcon {
+  font-size: 1.85rem;
+  line-height: 1;
+}
+
+.emptyTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--text);
+}
+
+.emptyHint {
+  margin: 0 auto;
+  max-width: 34rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+.formatHint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: 0.85rem;
+}
+
+.formatHintLabel {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-subtle);
+}
+
+.formatList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.formatTag {
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--terracotta-300);
+  background-color: var(--accent-soft);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent-active);
+}

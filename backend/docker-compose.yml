@@ -1,0 +1,89 @@
+# Docker Compose configuration for local development of the
+# MarkItDown Website Backend (FastAPI).
+#
+# Usage:
+#   docker compose up --build
+#
+# The service builds from the local Dockerfile, exposes port 8000, mounts a
+# named volume for temporary storage, and is gated by the container health
+# check defined in the Dockerfile (GET /api/health).
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: markitdown-backend:latest
+    container_name: markitdown-backend
+    ports:
+      # host:container - exposes the API on http://localhost:8000
+      - "8000:8000"
+    environment:
+      # ----------------------------------------------------------------------
+      # File handling
+      # ----------------------------------------------------------------------
+      # MAX_FILE_SIZE: maximum accepted upload size in bytes (default 50MB).
+      MAX_FILE_SIZE: "52428800"
+      # CONVERSION_TIMEOUT: max seconds for a single conversion (1-300).
+      CONVERSION_TIMEOUT: "30"
+      # MAX_CONCURRENT_CONVERSIONS: simultaneous conversions allowed (1-20).
+      MAX_CONCURRENT_CONVERSIONS: "5"
+
+      # ----------------------------------------------------------------------
+      # Storage
+      # ----------------------------------------------------------------------
+      # TEMP_STORAGE_PATH: in-container path for uploads/results. Must match
+      # the mounted volume target below.
+      TEMP_STORAGE_PATH: "/app/temp"
+      # RESULT_RETENTION_HOURS: how long converted results are kept (1-24).
+      RESULT_RETENTION_HOURS: "1"
+
+      # ----------------------------------------------------------------------
+      # CORS
+      # ----------------------------------------------------------------------
+      # CORS_ORIGINS: comma-separated list of allowed frontend origins.
+      CORS_ORIGINS: "http://localhost:3000,http://localhost:5173"
+
+      # ----------------------------------------------------------------------
+      # Rate limiting
+      # ----------------------------------------------------------------------
+      # RATE_LIMIT_PER_HOUR: max requests per client IP per hour.
+      RATE_LIMIT_PER_HOUR: "100"
+
+      # ----------------------------------------------------------------------
+      # Application
+      # ----------------------------------------------------------------------
+      # APP_NAME / APP_VERSION: metadata reported by the health endpoint.
+      APP_NAME: "MarkItDown Website API"
+      APP_VERSION: "0.1.0"
+      # DEBUG: enable verbose debug mode (set "true" for local debugging only).
+      DEBUG: "false"
+
+      # ----------------------------------------------------------------------
+      # Azure AI services (optional)
+      # ----------------------------------------------------------------------
+      # Leave empty to disable cloud-enhanced conversion. When both an endpoint
+      # and key are provided for a service, that integration is enabled.
+      # AZURE_DI_*  -> Azure Document Intelligence (cloud_service="azure_di")
+      # AZURE_CU_*  -> Azure Content Understanding (cloud_service="azure_cu")
+      AZURE_DI_ENDPOINT: "${AZURE_DI_ENDPOINT:-}"
+      AZURE_DI_KEY: "${AZURE_DI_KEY:-}"
+      AZURE_CU_ENDPOINT: "${AZURE_CU_ENDPOINT:-}"
+      AZURE_CU_KEY: "${AZURE_CU_KEY:-}"
+    volumes:
+      # Persist temporary uploads/results in a named volume so they survive
+      # container restarts but stay isolated from the host filesystem.
+      - temp_storage:/app/temp
+    healthcheck:
+      # Mirror the Dockerfile HEALTHCHECK so `docker compose` reports health.
+      test: ["CMD", "curl", "--fail", "--silent", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
+    restart: unless-stopped
+
+volumes:
+  # Named volume backing the in-container temporary storage path.
+  temp_storage:
+    driver: local

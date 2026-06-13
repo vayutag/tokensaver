@@ -1,0 +1,360 @@
+/**
+ * Styles for the ConversionResults component.
+ *
+ * Task 7.1 - Create ConversionResults component.
+ *
+ * Restyled to the MarkItDown design system (see styles/index.css): a polished
+ * result card with a prominent size-reduction banner, a clean metadata grid,
+ * a segmented Preview/Raw control, and primary/secondary action buttons.
+ */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background-color: var(--surface);
+  box-shadow: var(--shadow-md);
+  /* Subtle entrance as result cards appear. Neutralized under
+     prefers-reduced-motion by the global rule in styles/index.css. */
+  animation: result-card-in 0.35s ease both;
+}
+
+@keyframes result-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.titleGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.fileName {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.badge {
+  flex-shrink: 0;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.badgeSuccess {
+  background-color: var(--success-soft);
+  color: var(--success);
+}
+
+.badgeError {
+  background-color: var(--danger-soft);
+  color: var(--danger);
+}
+
+.clearButton {
+  flex-shrink: 0;
+  width: 1.85rem;
+  height: 1.85rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--text-subtle);
+  cursor: pointer;
+  transition:
+    background-color var(--transition),
+    color var(--transition);
+}
+
+.clearButton:hover {
+  background-color: var(--bg-soft);
+  color: var(--text);
+}
+
+.clearButton:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--ring);
+}
+
+/* Icon-only and compact controls become full 44px tap targets on touch
+   devices, while the desktop layout stays compact. Requirement 17.2. */
+@media (pointer: coarse) {
+  .clearButton {
+    width: 44px;
+    height: 44px;
+  }
+
+  .toggleButton,
+  .actionButton {
+    min-height: 44px;
+  }
+}
+
+/* Prominent size-reduction banner — the core value of converting. */
+.reduction {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.85rem;
+  padding: 0.9rem 1.1rem;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+}
+
+.reductionPositive {
+  background-color: var(--success-soft);
+  border-color: color-mix(in srgb, var(--success) 30%, transparent);
+}
+
+.reductionNegative {
+  background-color: var(--warning-soft);
+  border-color: color-mix(in srgb, var(--warning) 32%, transparent);
+}
+
+.reductionValue {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.reductionPositive .reductionValue {
+  color: var(--success);
+}
+
+.reductionNegative .reductionValue {
+  color: var(--warning);
+}
+
+.reductionDetail {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.metadata {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem 1.25rem;
+  margin: 0;
+  padding: 1rem 1.1rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background-color: var(--surface-2);
+}
+
+.metadataItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.metadataLabel {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-subtle);
+}
+
+.metadataValue {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+/* Segmented control for the Preview / Raw toggle. */
+.viewToggle {
+  display: inline-flex;
+  padding: 3px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-soft);
+}
+
+.toggleButton {
+  padding: 0.4rem 1rem;
+  border: none;
+  border-radius: calc(var(--radius-sm) - 3px);
+  background-color: transparent;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition:
+    background-color var(--transition),
+    color var(--transition),
+    box-shadow var(--transition);
+}
+
+.toggleButton:hover {
+  color: var(--text);
+}
+
+.toggleButtonActive {
+  background: var(--gradient-accent);
+  color: var(--text-on-accent);
+  box-shadow: var(--shadow-sm);
+}
+
+.toggleButtonActive:hover {
+  color: var(--text-on-accent);
+}
+
+.toggleButton:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--ring);
+}
+
+.actions {
+  display: inline-flex;
+  gap: 0.5rem;
+}
+
+/* Secondary action button (Copy). */
+.actionButton {
+  padding: 0.45rem 1rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background-color: var(--surface);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  transition:
+    background-color var(--transition),
+    border-color var(--transition),
+    transform var(--transition),
+    box-shadow var(--transition);
+}
+
+.actionButton:hover:not(:disabled) {
+  background-color: var(--bg-soft);
+  border-color: var(--accent);
+}
+
+.actionButton:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.actionButton:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--ring);
+}
+
+/* Primary action button (Download) — terracotta gradient with hover lift. */
+.actionButtonPrimary {
+  border-color: transparent;
+  background: var(--gradient-accent);
+  color: var(--text-on-accent);
+  box-shadow: var(--shadow-accent);
+}
+
+.actionButtonPrimary:hover:not(:disabled) {
+  background: var(--gradient-accent);
+  border-color: transparent;
+  transform: translateY(-1px);
+  box-shadow:
+    var(--shadow-accent),
+    var(--shadow-md);
+}
+
+.body {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background-color: var(--surface);
+  max-height: 32rem;
+  overflow: auto;
+}
+
+.previewPlaceholder {
+  padding: 1rem;
+}
+
+.previewText,
+.rawMarkdown {
+  margin: 0;
+  padding: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.previewText {
+  padding: 0;
+}
+
+.inlineError {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--danger);
+}
+
+.errorMessage {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid color-mix(in srgb, var(--danger) 30%, transparent);
+  border-radius: var(--radius);
+  background-color: var(--danger-soft);
+}
+
+.errorTitle {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--danger);
+}
+
+.errorText {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--charcoal-700);
+}

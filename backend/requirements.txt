@@ -1,0 +1,21 @@
+# Core FastAPI dependencies
+fastapi==0.115.0
+uvicorn[standard]==0.32.0
+python-multipart==0.0.12
+pydantic==2.9.2
+pydantic-settings==2.6.1
+
+# MarkItDown conversion library
+markitdown==0.0.1a2
+
+# Environment variable management
+python-dotenv==1.0.1
+
+# Optional dependencies for enhanced conversions
+# Azure AI services (optional - install to enable cloud conversion quality)
+# Azure Document Intelligence (cloud_service="azure_di")
+# azure-ai-documentintelligence>=1.0.0
+# Azure Content Understanding (cloud_service="azure_cu")
+# azure-ai-inference>=1.0.0
+# Shared credential type used by both clients
+# azure-core>=1.30.0

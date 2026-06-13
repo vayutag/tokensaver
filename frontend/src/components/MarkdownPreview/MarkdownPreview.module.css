@@ -1,0 +1,175 @@
+/**
+ * Styles for the MarkdownPreview component.
+ *
+ * Provides GitHub-like typography for rendered markdown plus styling for
+ * inline code and syntax-highlighted fenced code blocks.
+ *
+ * Task 7.2 - Integrate markdown rendering library.
+ *
+ * Restyled to the MarkItDown design system (see styles/index.css): refined
+ * prose set in the sans family, terracotta links and blockquote accents,
+ * a terracotta-tinted inline code chip, and dark code blocks.
+ */
+
+.preview {
+  padding: 1.25rem 1.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text);
+  word-wrap: break-word;
+}
+
+/* Headings */
+.preview h1,
+.preview h2,
+.preview h3,
+.preview h4,
+.preview h5,
+.preview h6 {
+  margin: 1.75rem 0 0.75rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.preview h1:first-child,
+.preview h2:first-child,
+.preview h3:first-child {
+  margin-top: 0;
+}
+
+.preview h1 {
+  font-size: 1.8rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.preview h2 {
+  font-size: 1.45rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.preview h3 {
+  font-size: 1.2rem;
+}
+
+.preview h4 {
+  font-size: 1rem;
+}
+
+/* Paragraphs and lists */
+.preview p,
+.preview ul,
+.preview ol {
+  margin: 0 0 1rem;
+}
+
+.preview ul,
+.preview ol {
+  padding-left: 1.5rem;
+}
+
+.preview li + li {
+  margin-top: 0.3rem;
+}
+
+/* Task lists (GFM) */
+.preview input[type='checkbox'] {
+  margin-right: 0.4rem;
+  accent-color: var(--accent);
+}
+
+/* Links */
+.preview a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.preview a:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Blockquotes — terracotta left border on a soft surface. */
+.preview blockquote {
+  margin: 0 0 1rem;
+  padding: 0.5rem 1.1rem;
+  border-left: 4px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  color: var(--text-muted);
+  background-color: var(--surface-2);
+}
+
+.preview blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Horizontal rule */
+.preview hr {
+  height: 1px;
+  margin: 1.75rem 0;
+  border: none;
+  background-color: var(--border);
+}
+
+/* Images */
+.preview img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+}
+
+/* Tables (GFM) */
+.preview table {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  margin: 0 0 1rem;
+  overflow: auto;
+  border-collapse: collapse;
+  border-radius: var(--radius-sm);
+}
+
+.preview th,
+.preview td {
+  padding: 0.5rem 0.85rem;
+  border: 1px solid var(--border);
+}
+
+.preview th {
+  font-weight: 600;
+  color: var(--text);
+  background-color: var(--surface-2);
+}
+
+.preview tr:nth-child(2n) td {
+  background-color: var(--surface-2);
+}
+
+/* Inline code — terracotta-tinted chip. */
+.inlineCode {
+  padding: 0.15em 0.4em;
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  color: var(--accent-active);
+  background-color: var(--accent-soft);
+  border-radius: var(--radius-sm);
+}
+
+/* Fenced code blocks (rendered by react-syntax-highlighter). The dark
+   surface and rounded corners frame the highlighter's own theme. */
+.codeBlock {
+  margin: 0 0 1rem !important;
+  padding: 1rem 1.1rem !important;
+  border-radius: var(--radius) !important;
+  background-color: var(--charcoal-800) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 0.85rem !important;
+  box-shadow: var(--shadow-sm);
+}
