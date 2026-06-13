@@ -120,10 +120,18 @@ export const BLOCKED_FILE_EXTENSIONS: string[] = [
 ];
 
 /**
- * Base URL of the FastAPI backend, sourced from `VITE_API_BASE_URL`.
+ * Base URL of the FastAPI backend.
+ *
+ * In production the deployed Render backend URL is hardcoded so a stale or
+ * incorrect `VITE_API_BASE_URL` env var on the host cannot point the app at
+ * the wrong origin (which previously caused 404s). In development the env var
+ * (or localhost) is used so you can target a local backend.
  */
-export const API_BASE_URL: string =
-  import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+const PRODUCTION_API_BASE_URL = 'https://tokensaver-api-yyta.onrender.com';
+
+export const API_BASE_URL: string = import.meta.env.DEV
+  ? import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
+  : PRODUCTION_API_BASE_URL;
 
 /**
  * API endpoint paths exposed by the backend (Requirement 14.x).
