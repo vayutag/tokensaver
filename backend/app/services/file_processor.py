@@ -254,29 +254,11 @@ class FileProcessor:
         # (heavy) markitdown dependency to be installed at import time.
         from markitdown import MarkItDown
 
-        mlm_client = None
-        mlm_model = None
-        cloud_used = False
-
-        if use_cloud and cloud_service:
-            client = get_cloud_client(cloud_service, self._settings)
-            if client is not None:
-                mlm_client = client
-                mlm_model = _CLOUD_MODEL_BY_SERVICE.get(cloud_service)
-                cloud_used = True
-                logger.info(
-                    "Configured MarkItDown with cloud service '%s'.",
-                    cloud_service,
-                )
-            else:
-                logger.warning(
-                    "Cloud service '%s' requested but unavailable; "
-                    "falling back to local processing.",
-                    cloud_service,
-                )
-
-        markitdown = MarkItDown(mlm_client=mlm_client, mlm_model=mlm_model)
-        return markitdown, cloud_used
+        # Local conversion only. The MarkItDown constructor is called with no
+        # arguments for broad compatibility across library versions (the
+        # cloud/LLM wiring was removed from the product).
+        markitdown = MarkItDown()
+        return markitdown, False
 
     def _convert_with_retry(self, markitdown: "object", file_path: str) -> str:
         """Convert ``file_path`` using a cloud-backed MarkItDown with retries.

@@ -5,8 +5,10 @@ python-multipart==0.0.12
 pydantic==2.9.2
 pydantic-settings==2.6.1
 
-# MarkItDown conversion library
-markitdown==0.0.1a2
+# MarkItDown conversion library — install with the document-format extras so
+# Excel, Word, PowerPoint, PDF, and Outlook conversions work. The bare package
+# ships no format converters.
+markitdown[pdf,docx,pptx,xlsx,xls,outlook]>=0.1.1
 
 # Environment variable management
 python-dotenv==1.0.1
